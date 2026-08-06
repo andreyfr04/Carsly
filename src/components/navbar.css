@@ -1,0 +1,112 @@
+.navbar {
+  width: 260px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 2rem 1.25rem;
+  background: linear-gradient(180deg, #000000 0%, #1a0000 100%);
+  color: #f8fafc;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.45);
+}
+
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #f8fafc;
+  text-decoration: none;
+  margin-bottom: 2rem;
+}
+
+.navbar__logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #7f1d1d;
+  color: white;
+  font-weight: 800;
+}
+
+.navbar__garage {
+  border: none;
+  border-radius: 10px;
+  background: #7f1d1d;
+  color: white;
+  padding: 0.8rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.navbar__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  width: 100%;
+}
+
+.navbar__cars-title {
+  color: #f8fafc;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.7rem 0.9rem 0.2rem;
+}
+
+.navbar__add-car {
+  border: 1px solid rgba(127, 29, 29, 0.45);
+  border-radius: 999px;
+  background: transparent;
+  color: #e5e7eb;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.35rem 0.7rem;
+  cursor: pointer;
+  align-self: flex-start;
+  margin-left: 0.9rem;
+}
+
+.navbar__cars-title:hover {
+  color: #ffffff;
+}
+
+.navbar__add-car:hover {
+  background: rgba(127, 29, 29, 0.2);
+  color: #ffffff;
+}
+
+@media (max-width: 800px) {
+  .navbar {
+    width: 100%;
+    min-height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .navbar__brand {
+    margin-bottom: 0;
+  }
+
+  .navbar__garage {
+    width: auto;
+    margin-bottom: 0;
+  }
+
+  .navbar__links {
+    width: 100%;
+    flex-direction: row;
+    margin-top: 1rem;
+    justify-content: space-between;
+  }
+}

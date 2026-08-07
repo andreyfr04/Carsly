@@ -1,7 +1,7 @@
 import React from 'react';
 import './navbar.css';
 
-function Navbar() {
+function Navbar({ onAddCarClick }) {
   return (
     <nav className="navbar">
       <a className="navbar__brand" href="#home">
@@ -17,8 +17,8 @@ function Navbar() {
         <a className="navbar__cars-title" href="#about">
           Your Cars
         </a>
-        <button className="navbar__add-car" type="button">
-          Add a new car
+        <button className="navbar__add-car" type="button" onClick = {onAddCarClick}>
+          Add New Car
         </button>
       </div>
     </nav>

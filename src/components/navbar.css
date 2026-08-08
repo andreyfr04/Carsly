@@ -62,16 +62,17 @@
 }
 
 .navbar__add-car {
-  border: 1px solid rgba(127, 29, 29, 0.45);
-  border-radius: 999px;
-  background: transparent;
-  color: #e5e7eb;
+  border: none;
+  border-radius: 10px;
+  background: #7f1d1d;
+  color: white;
+  padding: 0.8rem 1rem;
   font-size: 0.8rem;
-  font-weight: 500;
-  padding: 0.35rem 0.7rem;
+  font-weight: 600;
   cursor: pointer;
   align-self: flex-start;
   margin-left: 0.9rem;
+  width: auto;
 }
 
 .navbar__cars-title:hover {
@@ -79,7 +80,7 @@
 }
 
 .navbar__add-car:hover {
-  background: rgba(127, 29, 29, 0.2);
+  background: #991b1b;
   color: #ffffff;
 }
 

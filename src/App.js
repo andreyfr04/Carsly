@@ -34,7 +34,17 @@ function handleAddCar(newCar) {
             />
         )}
 
-        <p style = {{color: 'white'}} > Number of cars registered: {cars.length}</p>
+        <section className = "garage-grid">
+          {cars.map((car) => (
+            <div key = {car.id} className = "car-tile">
+              <h3> {car.name}</h3>
+              <p>{car.model} {car.year}</p>
+              <h4>{car.mileage.toLocaleString()} miles </h4>
+            </div>
+
+          ))}
+        </section>
+      
       </main>
     </div>
   );

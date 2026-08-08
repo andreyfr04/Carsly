@@ -13,7 +13,7 @@ function AddCarPanel({ onClose, onSave }) {
       name: carName,
       model: carModel,
       year: carYear,
-      mileage: carMileage,
+      mileage: Number(carMileage),
     };
     onSave(newCar);
   };

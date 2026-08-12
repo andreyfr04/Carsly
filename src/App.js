@@ -25,14 +25,20 @@ function handleAddCar(newCar) {
       <main className="app__content">
       {selectedCar ?(
         // ---- CAR DETAIL VIEW ----
-        <div>
-          <button onClick ={() => setSelectedCarID(null)}> Back to Garage</button>
-          <h1>{selectedCar.name}</h1>
-          <p>{selectedCar.model} ({selectedCar.year})</p>
-          <p>{selectedCar.mileage.toLocaleString()} miles</p>
-          <p>Journey Type: {selectedCar.journeyType}</p>
-          <p>Weekly Mileage: {selectedCar.weeklyMileage} mi</p>
+      <div>
+        <button className="back-btn" onClick={() => setSelectedCarID(null)}>← Back to Garage</button>
+
+        <div className="car-detail-header">
+          <div>
+            <p className="car-detail-eyebrow">{selectedCar.model} ({selectedCar.year})</p>
+            <h1>{selectedCar.name}</h1>
+            <p className="car-detail-meta">
+              {selectedCar.journeyType} driving · {selectedCar.weeklyMileage} mi/week
+            </p>
+          </div>
+          <div className="odometer-badge">{selectedCar.mileage.toLocaleString()} mi</div>
         </div>
+</div>
       ) : (
         // ---- GARAGE VIEW ----
         <>

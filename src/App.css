@@ -95,6 +95,54 @@ body {
   font-size: 13px;
 }
 
+
+.back-btn {
+  background: #1b1010;
+  border: 1px solid #3a1f1f;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+.back-btn:hover {
+  border-color: #b33;
+}
+
+.car-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.car-detail-eyebrow {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #7a5f5f;
+  margin: 0 0 4px 0;
+}
+
+.car-detail-meta {
+  color: #b89;
+  font-size: 13px;
+  margin: 6px 0 0 0;
+}
+
+.odometer-badge {
+  font-family: monospace;
+  font-size: 20px;
+  color: white;
+  background: #1b1010;
+  border: 1px solid #3a1f1f;
+  padding: 10px 16px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
 @media (max-width: 800px) {
   .app {
     flex-direction: column;

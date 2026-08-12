@@ -25,24 +25,14 @@ function handleAddCar(newCar) {
       <main className="app__content">
       {selectedCar ?(
         // ---- CAR DETAIL VIEW ----
-        <section className="car-detail-view">
-          <button className="car-detail-view__back" onClick ={() => setSelectedCarID(null)}>
-            <span aria-hidden="true">←</span> Back to Garage
-          </button>
-          <div className="car-detail-view__content">
-            <div className="car-detail-view__kicker">
-              {selectedCar.year} {selectedCar.model} <span aria-hidden="true">•</span> {selectedCar.mileage.toLocaleString()} miles
-            </div>
-            <h1 className="car-detail-view__title">{selectedCar.name}</h1>
-            <p className="car-detail-view__subtitle">
-              {selectedCar.journeyType === 'city' ? 'Mostly City' : selectedCar.journeyType === 'highway' ? 'Mostly Highway' : 'Mixed City and Highway'}
-              <span aria-hidden="true"> • </span>
-              {selectedCar.journeyType === 'highway' ? 'Daily driver' : 'Daily driver'}
-              <span aria-hidden="true"> • </span>
-              {selectedCar.weeklyMileage} mi/week
-            </p>
-          </div>
-        </section>
+        <div>
+          <button onClick ={() => setSelectedCarID(null)}> Back to Garage</button>
+          <h1>{selectedCar.name}</h1>
+          <p>{selectedCar.model} ({selectedCar.year})</p>
+          <p>{selectedCar.mileage.toLocaleString()} miles</p>
+          <p>Journey Type: {selectedCar.journeyType}</p>
+          <p>Weekly Mileage: {selectedCar.weeklyMileage} mi</p>
+        </div>
       ) : (
         // ---- GARAGE VIEW ----
         <>

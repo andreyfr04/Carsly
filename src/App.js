@@ -4,6 +4,7 @@ import AddCarPanel from './AddCarPanel';
 import React, {useState} from 'react';
 import {MAINTENANCE_TYPES} from './maintenanceTypes';
 import {calculateMaintenanceCost} from './maintenanceLogic';
+import Gauge from './Gauge';
 
 
 function App() {
@@ -40,14 +41,15 @@ function handleAddCar(newCar) {
           </div>
           <div className="odometer-badge">{selectedCar.mileage.toLocaleString()} mi</div>
         </div>
-          <div className = "maintenance-list">
+          <div className = "maintenance-grid">
             {MAINTENANCE_TYPES.map((type) => {
               const result = calculateMaintenanceCost(selectedCar, type);
               return (
-                <div key = {type.id} className={`maintenance-row status-${result.status}`}>
-                  <div className = "maintenance-label">{type.label}</div>
-                  <div className = "maintenance-status">{result.status}</div>
-                  <div className = "maintenance-days">Due in {result.daysUntilDue} days</div>
+                <div key = {type.id} className= "maintenance-card">
+                  <Gauge status={result.status} />
+                  <h3 className = "maintenance-card-label">{type.label}</h3>
+                  <p className="maintenance-card-detail"></p>
+                  <span className={`status-pill status-${result.status.replace(' ', '-')}`}>{result.status}</span>
                 </div>
               );
             })}

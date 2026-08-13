@@ -164,6 +164,37 @@ body {
 .maintenance-row.status-soon { border-color: #f2a93b; }
 .maintenance-row.status-ok { border-color: #4cb782; }
 
+.maintenance-grid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.maintenance-card {
+  background: #1b1010;
+  border: 1px solid #3a1f1f;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  color: white;
+}
+
+.maintenance-card-label {
+  margin: 4px 0 0 0;
+  font-size: 14px;
+}
+
+.maintenance-card-detail {
+  font-size: 12px;
+  color: #b89;
+  margin: 0;
+}
+
 @media (max-width: 800px) {
   .app {
     flex-direction: column;

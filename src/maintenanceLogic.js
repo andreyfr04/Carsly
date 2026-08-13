@@ -34,6 +34,9 @@ export function calculateMaintenanceCost(car, type) {
     if( daysUntilDue <= 0) status = 'overdue';
     else if (daysUntilDue <= 30) status = 'due soon';
 
+
+
+
     return {
         type,
         intervalMiles,
@@ -41,7 +44,6 @@ export function calculateMaintenanceCost(car, type) {
         mileageRemaining,
         daysUntilDue,
         status,
-
     };
 }
 

@@ -7,7 +7,7 @@ const JOURNEY_MULTIPLIER = {
 
 
 export function calculateMaintenanceCost(car, type) {
-    const multiplier = JOURNEY_MULTIPLIER[type] || 1;   // look up the multiplier based on the journey type, default to 1 if not found
+    const multiplier = JOURNEY_MULTIPLIER[car.journeyType] || 1;   // look up the multiplier based on the journey type, default to 1 if not found
     const intervalMiles = Math.round(type.baseMiles * multiplier);   
     const intervalMonths = Math.round(type.baseMonths * multiplier); // apply multiplier to miles/months
 

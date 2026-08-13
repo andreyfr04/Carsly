@@ -17,7 +17,7 @@ function AddCarPanel({ onClose, onSave }) {
       year: carYear,
       mileage: Number(carMileage),
       journeyType: journeyType,
-      weeklyMileage: weeklyMileage,
+      weeklyMileage: Number(weeklyMileage),
       registeredDate: new Date().toISOString().slice(0, 10)
     };
     console.log(newCar); 

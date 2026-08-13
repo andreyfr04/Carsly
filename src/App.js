@@ -2,6 +2,8 @@ import './App.css';
 import Navbar from './components/navbar';
 import AddCarPanel from './AddCarPanel';
 import React, {useState} from 'react';
+import {MAINTENANCE_TYPES} from './maintenanceTypes';
+import {calculateMaintenanceCost} from './maintenanceLogic';
 
 
 function App() {
@@ -38,7 +40,19 @@ function handleAddCar(newCar) {
           </div>
           <div className="odometer-badge">{selectedCar.mileage.toLocaleString()} mi</div>
         </div>
-</div>
+          <div className = "maintenance-list">
+            {MAINTENANCE_TYPES.map((type) => {
+              const result = calculateMaintenanceCost(selectedCar, type);
+              return (
+                <div key = {type.id} className={`maintenance-row status-${result.status}`}>
+                  <div className = "maintenance-label">{type.label}</div>
+                  <div className = "maintenance-status">{result.status}</div>
+                  <div className = "maintenance-days">Due in {result.daysUntilDue} days</div>
+                </div>
+              );
+            })}
+          </div>
+  </div>
       ) : (
         // ---- GARAGE VIEW ----
         <>

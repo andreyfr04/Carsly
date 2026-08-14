@@ -5,14 +5,22 @@ const JOURNEY_MULTIPLIER = {
     
 };
 
+function getLastService(serviceHistory, carID, typeID){
+    const matches = serviceHistory.filter((h) => h.carID === carID && h.typeID === typeID);
+    if (matches.length === 0) return null;
+    matches.sort((a, b) => b.date.localeCompare(a.date));
+    return matches[0];
+}
 
-export function calculateMaintenanceCost(car, type) {
+
+export function calculateMaintenanceCost(car, type, serviceHistory) {
     const multiplier = JOURNEY_MULTIPLIER[car.journeyType] || 1;   // look up the multiplier based on the journey type, default to 1 if not found
     const intervalMiles = Math.round(type.baseMiles * multiplier);   
     const intervalMonths = Math.round(type.baseMonths * multiplier); // apply multiplier to miles/months
 
-    const baseMileage = car.mileage; 
-    const baseDate = car.registeredDate;
+    const lastService = getLastService(serviceHistory, car.id, type.id);
+    const baseMileage = lastService ? lastService.mileage : 0; 
+    const baseDate = lastService ? lastService.date : car.registeredDate; 
 
     const dueMileage = baseMileage + intervalMiles;  //simple calculation to determine when the next maintenance is due based on mileage
     const mileageRemaining = dueMileage - car.mileage; // how many miles remaining until maintenance

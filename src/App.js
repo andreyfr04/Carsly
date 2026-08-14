@@ -5,6 +5,7 @@ import React, {useState} from 'react';
 import {MAINTENANCE_TYPES} from './maintenanceTypes';
 import {calculateMaintenanceCost} from './maintenanceLogic';
 import Gauge from './Gauge';
+import LogServicePanel from './LogServicePanel';
 
 
 function App() {
@@ -13,11 +14,20 @@ function App() {
   const [showAddCar, setShowAddCar] = useState(false);
   const [selectedCarID, setSelectedCarID] = useState(null);
 
+  const [serviceHistory, setServiceHistory] = useState([]);
+  const [logServiceType, setLogServiceType] = useState(null); // which maintenance type we're logging, or null
 
 function handleAddCar(newCar) {
   setCars([...cars, newCar]);
   setShowAddCar(false);
 }  
+
+function handleLogService(entry) {
+  setServiceHistory([...serviceHistory, entry]);
+  setLogServiceType(null);
+}
+
+
  
   const selectedCar = cars.find((car) => car.id === selectedCarID);
   return (
@@ -38,12 +48,14 @@ function handleAddCar(newCar) {
             <p className="car-detail-meta">
               {selectedCar.journeyType} driving · {selectedCar.weeklyMileage} mi/week
             </p>
+            <button className="log-service-btn" onClick={() => setLogServiceType(MAINTENANCE_TYPES[0].id)}>Log Service</button>
           </div>
           <div className="odometer-badge">{selectedCar.mileage.toLocaleString()} mi</div>
         </div>
           <div className = "maintenance-grid">
             {MAINTENANCE_TYPES.map((type) => {
-              const result = calculateMaintenanceCost(selectedCar, type);
+              const result = calculateMaintenanceCost(selectedCar, type, serviceHistory);
+              
               return (
                 <div key = {type.id} className= "maintenance-card">
                   <Gauge status={result.status} />
@@ -52,6 +64,7 @@ function handleAddCar(newCar) {
                   <span className={`status-pill status-${result.status.replace(' ', '-')}`}>{result.status}</span>
                 </div>
               );
+              
             })}
           </div>
   </div>
@@ -85,6 +98,16 @@ function handleAddCar(newCar) {
             onClose={() => setShowAddCar(false)}
             onSave= {handleAddCar}
             />
+        )}
+
+        {logServiceType &&(
+          <LogServicePanel
+            car={selectedCar}
+            typeID={logServiceType}
+            types={MAINTENANCE_TYPES}
+            onClose={() => setLogServiceType(null)}
+            onSave={handleLogService}
+          />
         )}
     </div>
   );

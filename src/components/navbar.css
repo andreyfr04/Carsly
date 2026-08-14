@@ -36,14 +36,28 @@
 
 .navbar__garage {
   border: none;
-  border-radius: 10px;
-  background: #7f1d1d;
-  color: white;
-  padding: 0.8rem 1rem;
-  font-weight: 600;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #f97316 0%, #ef4444 45%, #b91c1c 100%);
+  color: #fff7ed;
+  padding: 0.8rem 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
   cursor: pointer;
   margin-bottom: 2rem;
   width: 100%;
+  box-shadow: 0 12px 24px rgba(239, 68, 68, 0.28);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.navbar__garage:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(239, 68, 68, 0.38);
+  filter: brightness(1.06);
+}
+
+.navbar__garage:focus-visible {
+  outline: 2px solid #fdba74;
+  outline-offset: 3px;
 }
 
 .navbar__links {
@@ -63,16 +77,19 @@
 
 .navbar__add-car {
   border: none;
-  border-radius: 10px;
-  background: #7f1d1d;
-  color: white;
-  padding: 0.8rem 1rem;
-  font-size: 0.8rem;
-  font-weight: 600;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #f97316 0%, #ef4444 45%, #b91c1c 100%);
+  color: #fff7ed;
+  padding: 0.8rem 1.15rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
   cursor: pointer;
   align-self: flex-start;
   margin-left: 0.9rem;
   width: auto;
+  box-shadow: 0 12px 24px rgba(239, 68, 68, 0.28);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
 }
 
 .navbar__cars-title:hover {
@@ -80,8 +97,14 @@
 }
 
 .navbar__add-car:hover {
-  background: #991b1b;
-  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(239, 68, 68, 0.38);
+  filter: brightness(1.06);
+}
+
+.navbar__add-car:focus-visible {
+  outline: 2px solid #fdba74;
+  outline-offset: 3px;
 }
 
 @media (max-width: 800px) {

@@ -132,6 +132,32 @@ body {
   margin: 6px 0 0 0;
 }
 
+.log-service-btn {
+  margin-top: 14px;
+  border: none;
+  border-radius: 999px;
+  padding: 0.8rem 1.2rem;
+  background: linear-gradient(135deg, #f97316 0%, #ef4444 45%, #b91c1c 100%);
+  color: #fff7ed;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  box-shadow: 0 12px 24px rgba(239, 68, 68, 0.28);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.log-service-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(239, 68, 68, 0.38);
+  filter: brightness(1.06);
+}
+
+.log-service-btn:focus-visible {
+  outline: 2px solid #fdba74;
+  outline-offset: 3px;
+}
+
 .odometer-badge {
   font-family: monospace;
   font-size: 20px;

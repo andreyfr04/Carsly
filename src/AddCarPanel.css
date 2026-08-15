@@ -78,9 +78,18 @@
 
 .modal-actions button {
   padding: 8px 14px;
-  border-radius: 6px;
+  border-radius: 999px;
   border: none;
   cursor: pointer;
-  background: #7f1d1d;
-  color: white;
+  background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 45%, #4c0d0d 100%);
+  color: #fff1f2;
+  font-weight: 700;
+  box-shadow: 0 10px 20px rgba(127, 29, 29, 0.24);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.modal-actions button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(127, 29, 29, 0.34);
+  filter: brightness(1.08);
 }

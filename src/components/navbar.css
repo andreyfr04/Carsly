@@ -37,26 +37,26 @@
 .navbar__garage {
   border: none;
   border-radius: 999px;
-  background: linear-gradient(135deg, #f97316 0%, #ef4444 45%, #b91c1c 100%);
-  color: #fff7ed;
+  background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 45%, #4c0d0d 100%);
+  color: #fff1f2;
   padding: 0.8rem 1.1rem;
   font-weight: 700;
   letter-spacing: 0.03em;
   cursor: pointer;
   margin-bottom: 2rem;
   width: 100%;
-  box-shadow: 0 12px 24px rgba(239, 68, 68, 0.28);
+  box-shadow: 0 12px 24px rgba(127, 29, 29, 0.32);
   transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
 }
 
 .navbar__garage:hover {
   transform: translateY(-1px);
-  box-shadow: 0 14px 28px rgba(239, 68, 68, 0.38);
-  filter: brightness(1.06);
+  box-shadow: 0 14px 28px rgba(127, 29, 29, 0.42);
+  filter: brightness(1.08);
 }
 
 .navbar__garage:focus-visible {
-  outline: 2px solid #fdba74;
+  outline: 2px solid #fca5a5;
   outline-offset: 3px;
 }
 
@@ -78,8 +78,8 @@
 .navbar__add-car {
   border: none;
   border-radius: 999px;
-  background: linear-gradient(135deg, #f97316 0%, #ef4444 45%, #b91c1c 100%);
-  color: #fff7ed;
+  background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 45%, #4c0d0d 100%);
+  color: #fff1f2;
   padding: 0.8rem 1.15rem;
   font-size: 0.9rem;
   font-weight: 700;
@@ -88,7 +88,7 @@
   align-self: flex-start;
   margin-left: 0.9rem;
   width: auto;
-  box-shadow: 0 12px 24px rgba(239, 68, 68, 0.28);
+  box-shadow: 0 12px 24px rgba(127, 29, 29, 0.32);
   transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
 }
 
@@ -98,12 +98,12 @@
 
 .navbar__add-car:hover {
   transform: translateY(-1px);
-  box-shadow: 0 14px 28px rgba(239, 68, 68, 0.38);
-  filter: brightness(1.06);
+  box-shadow: 0 14px 28px rgba(127, 29, 29, 0.42);
+  filter: brightness(1.08);
 }
 
 .navbar__add-car:focus-visible {
-  outline: 2px solid #fdba74;
+  outline: 2px solid #fca5a5;
   outline-offset: 3px;
 }
 

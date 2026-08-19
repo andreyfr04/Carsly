@@ -9,8 +9,8 @@ function AddBillPanel({ car, onClose, onSave }) {
 
     function handleSave() {
         const entry = {
-            ID: Date.now(),
-            carID: car?.ID ?? car?.id,
+            id: Date.now(),
+            carID: car?.id ?? car?.ID,
             billType,
             date,
             amount: Number(amount),

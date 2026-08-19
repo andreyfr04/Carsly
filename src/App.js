@@ -7,6 +7,7 @@ import { calculateMaintenanceCost } from './maintenanceLogic';
 import Gauge from './Gauge';
 import LogServicePanel from './LogServicePanel';
 import AddBillPanel from './AddBillPanel';
+import SetBudgetPanel from './addBudgetPanel';
 
 function App() {
 
@@ -22,7 +23,10 @@ function App() {
 
   const [activeTab, setActiveTab] = useState('maintenance'); // 'maintenance' | 'bills' | 'budget'
 
-  // ---- EVENT HANDLERS ----
+  const [budgets, setBudget] = useState({});
+  const [showBudget, setShowBudget] = useState(false);
+
+  // --------HANDLERS-----------------------------------
   function handleAddCar(newCar) {
     setCars([...cars, newCar]);
     setShowAddCar(false);
@@ -34,8 +38,13 @@ function App() {
   }
 
   function handleAddBill(entry) {
-    setBills([...bills, entry]); // array spread, not object spread
+    setBills([...bills, entry]); 
     setShowAddBill(false);
+  }
+
+  function handleSetBudget(budgetData){
+    setBudget({...budgets, [selectedCarID] : budgetData});
+    setShowBudget(false);
   }
   // --------------------------------------------------
 
@@ -62,7 +71,7 @@ function App() {
               <div className="odometer-badge">{selectedCar.mileage.toLocaleString()} mi</div>
             </div>
 
-            {/* ---- TABS + ACTIONS ROW ---- */}
+            {/* ---- TABS  ---- */}
             <div className="tabs-row">
               <div className="tabs">
                 <button
@@ -121,35 +130,80 @@ function App() {
                   <button className="action-button" onClick={() => setShowAddBill(true)}>+ Add entry</button>
                 </div>
 
-                <table className="bills-table">
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Bill Type</th>
-                      <th>Odometer</th>
-                      <th>Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {bills
+                <div className="bills-list">
+                  {bills.filter((b) => b.carID === selectedCarID).length === 0 ? (
+                    <div className="bill-empty-state">
+                      No bills logged yet for this car.
+                    </div>
+                  ) : (
+                    bills
                       .filter((b) => b.carID === selectedCarID)
                       .map((b) => (
-                        <tr key={b.id}>
-                          <td>{b.date}</td>
-                          <td>{b.kind}</td>
-                          <td>{b.mileage ? b.mileage.toLocaleString() : '-'}</td>
-                          <td>£{b.amount.toFixed(2)}</td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
+                        <article key={b.id} className="bill-card">
+                          <div className="bill-card__top">
+                            <span className="bill-type-chip">{b.billType}</span>
+                            <span className="bill-amount">£{Number(b.amount).toFixed(2)}</span>
+                          </div>
+
+                          <div className="bill-card__meta">
+                            <span>{b.date}</span>
+                            <span>{b.mileage ? `${b.mileage.toLocaleString()} mi` : 'Mileage n/a'}</span>
+                          </div>
+
+                          {b.notes ? <p className="bill-notes">{b.notes}</p> : null}
+                        </article>
+                      ))
+                  )}
+                </div>
               </div>
             )}
 
-            {/* ---- BUDGET TAB (placeholder for now) ---- */}
+            {/* ---- BUDGET TAB  ---- */}
             {activeTab === 'budget' && (
               <div className="budget-section">
-                <p>Budget tracking coming soon.</p>
+                {(() => {
+                  const budget = budgets[selectedCarID];
+                  const now = new Date();
+                  const periodStart = budget && budget.period === "monthly"
+                    ? new Date(now.getFullYear(), now.getMonth(), 1)
+                    : new Date(now.getFullYear(), 0, 1);
+
+                  const periodBills = bills.filter(
+                    (b) => b.carID === selectedCarID && new Date(b.date) >= periodStart
+
+                  );
+                  const spent = periodBills.reduce((total,b)=> total + b.amount, 0);
+
+                  return (
+                    <>
+                    {budget ? (
+                      <div className="budget-card">
+                        <p className="budget-label">{budget.period === 'monthly' ? 'This month' : 'This year'}</p>
+                        <p className="budget-figure">£{spent.toFixed(2)} of £{budget.amount.toFixed(2)}</p>
+                        <div className="budget-bar-track">
+                          <div
+                            className="budget-bar-fill"
+                            style={{
+                              width: `${Math.min((spent / budget.amount) * 100, 100)}%`,
+                              background: spent > budget.amount ? '#e5484d' : '#4cb782',
+                            }}
+                          ></div>
+                        </div>
+                        <p className="budget-remaining">
+                          {spent > budget.amount
+                            ? 'Over budget for this period'
+                            : `£${(budget.amount - spent).toFixed(2)} remaining`}
+                        </p>
+                      </div>
+                    ) : (
+                      <p>No budget set for this car yet.</p>
+                    )}
+                    <button className="action-button" onClick={() => setShowBudget(true)}>
+                      {budget ? 'Edit budget' : 'Set budget'}
+                    </button>
+                    </>
+                  );
+                 })()} 
               </div>
             )}
           </div>
@@ -201,6 +255,16 @@ function App() {
           onSave={handleLogService}
         />
       )}
+
+      {showBudget && (
+        <SetBudgetPanel
+          existing = {budgets[selectedCarID]}
+          onClose = {() => setShowBudget(false)}
+          onSave = {handleSetBudget}
+          />
+      )}
+
+      
     </div>
   );
 }

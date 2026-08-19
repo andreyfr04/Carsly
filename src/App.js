@@ -1,7 +1,7 @@
 import './App.css';
 import Navbar from './components/navbar';
 import AddCarPanel from './AddCarPanel';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MAINTENANCE_TYPES } from './maintenanceTypes';
 import { calculateMaintenanceCost } from './maintenanceLogic';
 import Gauge from './Gauge';
@@ -23,8 +23,28 @@ function App() {
 
   const [activeTab, setActiveTab] = useState('maintenance'); // 'maintenance' | 'bills' | 'budget'
 
-  const [budgets, setBudget] = useState({});
+  const [budget, setBudget] = useState({}); // key by carID: { period, amount } for EVERY car
   const [showBudget, setShowBudget] = useState(false);
+
+  // Flag that tracks whether the initial load from localStorage has finished yet.
+  const [dataLoaded, setDataLoaded] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('carsly-data');
+    if (saved) {
+      const data = JSON.parse(saved);
+      setCars(data.cars || []);
+      setServiceHistory(data.serviceHistory || []);
+      setBills(data.bills || []);
+      setBudget(data.budget || {});
+    }
+    setDataLoaded(true); // loading attempt is done, whether or not there was anything saved
+  }, []);
+
+  useEffect(() => {
+    if (!dataLoaded) return; //  don't save until the load above has actually finished
+    localStorage.setItem('carsly-data', JSON.stringify({ cars, serviceHistory, bills, budget }));
+  }, [cars, serviceHistory, bills, budget, dataLoaded]);
 
   // --------HANDLERS-----------------------------------
   function handleAddCar(newCar) {
@@ -38,12 +58,12 @@ function App() {
   }
 
   function handleAddBill(entry) {
-    setBills([...bills, entry]); 
+    setBills([...bills, entry]);
     setShowAddBill(false);
   }
 
-  function handleSetBudget(budgetData){
-    setBudget({...budgets, [selectedCarID] : budgetData});
+  function handleSetBudget(budgetData) {
+    setBudget({ ...budget, [selectedCarID]: budgetData });
     setShowBudget(false);
   }
   // --------------------------------------------------
@@ -162,48 +182,47 @@ function App() {
             {activeTab === 'budget' && (
               <div className="budget-section">
                 {(() => {
-                  const budget = budgets[selectedCarID];
+                  const carBudget = budget[selectedCarID]; // THIS car's budget, distinct from the `budget` state (which holds every car's)
                   const now = new Date();
-                  const periodStart = budget && budget.period === "monthly"
+                  const periodStart = carBudget && carBudget.period === "monthly"
                     ? new Date(now.getFullYear(), now.getMonth(), 1)
                     : new Date(now.getFullYear(), 0, 1);
 
                   const periodBills = bills.filter(
                     (b) => b.carID === selectedCarID && new Date(b.date) >= periodStart
-
                   );
-                  const spent = periodBills.reduce((total,b)=> total + b.amount, 0);
+                  const spent = periodBills.reduce((total, b) => total + b.amount, 0);
 
                   return (
                     <>
-                    {budget ? (
-                      <div className="budget-card">
-                        <p className="budget-label">{budget.period === 'monthly' ? 'This month' : 'This year'}</p>
-                        <p className="budget-figure">£{spent.toFixed(2)} of £{budget.amount.toFixed(2)}</p>
-                        <div className="budget-bar-track">
-                          <div
-                            className="budget-bar-fill"
-                            style={{
-                              width: `${Math.min((spent / budget.amount) * 100, 100)}%`,
-                              background: spent > budget.amount ? '#e5484d' : '#4cb782',
-                            }}
-                          ></div>
+                      {carBudget ? (
+                        <div className="budget-card">
+                          <p className="budget-label">{carBudget.period === 'monthly' ? 'This month' : 'This year'}</p>
+                          <p className="budget-figure">£{spent.toFixed(2)} of £{carBudget.amount.toFixed(2)}</p>
+                          <div className="budget-bar-track">
+                            <div
+                              className="budget-bar-fill"
+                              style={{
+                                width: `${Math.min((spent / carBudget.amount) * 100, 100)}%`,
+                                background: spent > carBudget.amount ? '#e5484d' : '#4cb782',
+                              }}
+                            ></div>
+                          </div>
+                          <p className="budget-remaining">
+                            {spent > carBudget.amount
+                              ? 'Over budget for this period'
+                              : `£${(carBudget.amount - spent).toFixed(2)} remaining`}
+                          </p>
                         </div>
-                        <p className="budget-remaining">
-                          {spent > budget.amount
-                            ? 'Over budget for this period'
-                            : `£${(budget.amount - spent).toFixed(2)} remaining`}
-                        </p>
-                      </div>
-                    ) : (
-                      <p>No budget set for this car yet.</p>
-                    )}
-                    <button className="action-button" onClick={() => setShowBudget(true)}>
-                      {budget ? 'Edit budget' : 'Set budget'}
-                    </button>
+                      ) : (
+                        <p>No budget set for this car yet.</p>
+                      )}
+                      <button className="action-button" onClick={() => setShowBudget(true)}>
+                        {carBudget ? 'Edit budget' : 'Set budget'}
+                      </button>
                     </>
                   );
-                 })()} 
+                })()}
               </div>
             )}
           </div>
@@ -258,13 +277,12 @@ function App() {
 
       {showBudget && (
         <SetBudgetPanel
-          existing = {budgets[selectedCarID]}
-          onClose = {() => setShowBudget(false)}
-          onSave = {handleSetBudget}
-          />
+          existing={budget[selectedCarID]}
+          onClose={() => setShowBudget(false)}
+          onSave={handleSetBudget}
+        />
       )}
 
-      
     </div>
   );
 }

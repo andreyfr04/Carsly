@@ -71,6 +71,7 @@ body {
 }
 
 .car-tile {
+  position: relative;
   background: #1b1010;
   border: 1px solid #3a1f1f;
   border-radius: 10px;
@@ -85,8 +86,35 @@ body {
   transform: translateY(-2px);
 }
 
+.car-delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  border-radius: 50%;
+  background: rgba(127, 29, 29, 0.25);
+  color: #fecaca;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.car-delete-btn:hover {
+  background: rgba(127, 29, 29, 0.5);
+  transform: scale(1.04);
+}
+
+.car-delete-btn:focus-visible {
+  outline: 2px solid #fca5a5;
+  outline-offset: 2px;
+}
+
 .car-tile h3 {
   margin: 0 0 6px 0;
+  padding-right: 32px;
 }
 
 .car-tile p {

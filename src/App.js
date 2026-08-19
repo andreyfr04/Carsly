@@ -52,6 +52,21 @@ function App() {
     setShowAddCar(false);
   }
 
+  function handleDeleteCar(carId) {
+    setCars((currentCars) => currentCars.filter((car) => car.id !== carId));
+    setServiceHistory((currentHistory) => currentHistory.filter((entry) => entry.carID !== carId));
+    setBills((currentBills) => currentBills.filter((entry) => entry.carID !== carId));
+    setBudget((currentBudget) => {
+      const nextBudget = { ...currentBudget };
+      delete nextBudget[carId];
+      return nextBudget;
+    });
+
+    if (selectedCarID === carId) {
+      setSelectedCarID(null);
+    }
+  }
+
   function handleLogService(entry) {
     setServiceHistory([...serviceHistory, entry]);
     setLogServiceType(null);
@@ -240,6 +255,17 @@ function App() {
             <section className="garage-grid">
               {cars.map((car) => (
                 <div key={car.id} className="car-tile" onClick={() => setSelectedCarID(car.id)}>
+                  <button
+                    type="button"
+                    className="car-delete-btn"
+                    aria-label={`Delete ${car.name}`}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      handleDeleteCar(car.id);
+                    }}
+                  >
+                    ×
+                  </button>
                   <h3>{car.name}</h3>
                   <p>{car.model} {car.year}</p>
                   <h4>{car.mileage.toLocaleString()} miles</h4>

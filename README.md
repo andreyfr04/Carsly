@@ -1,70 +1,34 @@
-# Getting Started with Create React App
+Carsly 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A personalized vehicle maintenance reminder app that predicts when a car needs servicing based on manual input — mileage, driving habits, and logged service history — without requiring any OBD hardware.
 
-## Available Scripts
+Built as part of an MSc dissertation investigating whether personalized maintenance reminders improve perceived usefulness and behavioral intent compared to fixed, one-size-fits-all reminders.
 
-In the project directory, you can run:
 
-### `npm start`
+**Features**
+Register multiple cars, each with its own mileage, journey type (city / mixed / highway), and estimated weekly mileage
+Personalized maintenance gauges for 9 common service items (oil change, tire rotation, brake pads, battery, filters, coolant, wiper blades, timing belt, spark plugs) — colour-coded on-track / due-soon / overdue
+Log completed services, which become the new baseline for future predictions on that specific item
+Fuel & bill tracking, scoped per car
+Budget tracking with monthly/annual limits and spend-vs-budget progress
+Editable car details after registration
+Persists locally via localStorage — no backend required
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+** How the personalization works**
 
-### `npm test`
+Each maintenance item has a baseline interval (e.g. an oil change every 5,000 miles / 6 months). That baseline is adjusted using:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Journey type — city/stop-start driving shortens the interval, highway driving extends it
+Weekly mileage — used to project forward from the last logged service (or registration, if nothing's been logged yet) toward an estimated due date
+Whichever comes first — mileage or time — determines the status, mirroring how real manufacturer service intervals work ("5,000 miles or 6 months, whichever comes first")
 
-### `npm run build`
+** Tech stack**
+React (Create React App)
+Plain CSS (no framework)
+localStorage for persistence — no backend, no database
+Jest for unit testing the core calculation logic
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Academic context
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project was built as the technical deliverable for an MSc dissertation comparing personalized vs. non-personalized maintenance reminder systems. See the accompanying report for the full research question, methodology, user study design, and results.
